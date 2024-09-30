@@ -13,6 +13,7 @@ import (
 //+ 400 BadRequest 			Тип значения	curl -v -X POST http://localhost:8080/update/counter/m1/abs -H 'Content-Type: text/plain; charset=UTF-8'
 //+ 405 Method Not Allowed	Метод GET		curl -v -X GET  http://localhost:8080/update/counter/m1/abs -H 'Content-Type: text/plain; charset=UTF-8'
 //+	404 Status Not Found	Без метрики		curl -v -X GET  http://localhost:8080/update/m1/abs -H 'Content-Type: text/plain; charset=UTF-8'
+//-	?						?				curl -v -X POST http://localhost:8080/update/unknown/testCounter/100 -H 'Content-Type: text/plain; charset=UTF-8'
 
 // хранилище метрик
 type MemStorage struct {
@@ -91,6 +92,8 @@ func MetricHandler2(res http.ResponseWriter, req *http.Request) {
 		if _, err := strconv.Atoi(value); err != nil {
 			res.WriteHeader(http.StatusBadRequest)
 		}
+	} else {
+		res.WriteHeader(http.StatusBadRequest)
 	}
 
 	/* if name == "" {
