@@ -57,7 +57,7 @@ func MainPage(res http.ResponseWriter, req *http.Request) {
 }
 
 func MetricHandler2(res http.ResponseWriter, req *http.Request) {
-	body := fmt.Sprintf("Gauge POST-метод\r\n")
+	var body = ""
 
 	var metric, name, value string
 
