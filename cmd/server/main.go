@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"reflect"
 	"strconv"
@@ -68,7 +69,7 @@ func MetricHandler2(res http.ResponseWriter, req *http.Request) {
 
 		contentType := res.Header().Get("Content-Type")
 
-		body += fmt.Sprintf("Content-Type: %s\r\n", contentType)
+		body += fmt.Sprintf("\r\nContent-Type: %s\r\n", contentType)
 
 		metric = req.PathValue("metric")
 		name = req.PathValue("name")
@@ -102,6 +103,9 @@ func MetricHandler2(res http.ResponseWriter, req *http.Request) {
 		//res.WriteHeader(http.StatusBadRequest)
 	} */
 
+	log.Printf(body)
+	log.Println("\r\n")
+
 	res.Write([]byte(body))
 }
 
@@ -119,6 +123,8 @@ func main() {
 	//http.HandleFunc("/", MainPage)
 	//http.HandleFunc("/update/gauge/", Gauge)
 	//http.HandleFunc("/update/counter/", Counter)
+
+	log.Printf("Запуск сервера")
 
 	err := http.ListenAndServe(`:8080`, mux)
 	if err != nil {
